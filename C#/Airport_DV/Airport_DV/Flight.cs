@@ -80,12 +80,23 @@ namespace Airport_DV
         }
         public void SearchByNumber(int searchNumber)
         {
-            DisplayTitle();
+            bool isDisplaysText = false;
             for (int i = 0; i < fly.Length; i++)
             {
-                SortingByDateTime();
                 if (fly[i].Number == searchNumber)
+                {
+                    if (isDisplaysText == false)
+                    {
+                        DisplayTitle();
+                        isDisplaysText = true;
+                    }
                     Console.WriteLine(fly[i]);
+                }
+                if (isDisplaysText == false)
+                {
+                    Console.WriteLine($"The flight with number - {searchNumber} was not found");
+                    isDisplaysText = true;
+                }
             }
         }
 
@@ -94,7 +105,6 @@ namespace Airport_DV
             DisplayTitle();
             for (int i = 0; i < fly.Length; i++)
             {
-                SortingByDateTime();
                 var diff = date - fly[i].At;
                 var span = new TimeSpan(0, 30, 0);
                 if (diff < span)
@@ -107,7 +117,6 @@ namespace Airport_DV
             bool TEKCT_BbIBEgEH = false;
             for (int i = 0; i < fly.Length; i++)
             {
-                SortingByDateTime();
                 if (fly[i].City.ToUpper() == city.ToUpper())
                 {
                     if (TEKCT_BbIBEgEH == false)
@@ -130,7 +139,6 @@ namespace Airport_DV
             DisplayTitle();
             for (int i = 0; i < fly.Length; i++)
             {
-                SortingByDateTime();
                 if (DateTime.Now >= fly[i].At && fly[i].At <= DateTime.Now.AddMinutes(60))
                     Console.WriteLine(fly[i]);
             }
@@ -166,8 +174,8 @@ namespace Airport_DV
         public static void IsContinueSearch(Flight flight)
         {
             Console.WriteLine("Would you like to continue search? Please enter Y / N.");
-            char povtornbIyPoisk = char.Parse(Console.ReadLine());
-            while (povtornbIyPoisk == 'Y' || povtornbIyPoisk == 'y')
+            string povtornbIyPoisk = Console.ReadLine().ToString();
+            while (povtornbIyPoisk.ToUpper() == "Y")
             {
                 Console.Clear();
                 DisplaySearchOptions();
@@ -198,7 +206,7 @@ namespace Airport_DV
                 }
                 Console.WriteLine();
                 Console.WriteLine("Would you like to continue search? Please enter Y / N.");
-                povtornbIyPoisk = char.Parse(Console.ReadLine());
+                povtornbIyPoisk = Console.ReadLine().ToString();
             }
         }
     }
